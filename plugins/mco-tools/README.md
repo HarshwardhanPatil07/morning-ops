@@ -36,21 +36,7 @@ The command will interactively guide you through:
 6. Building and verifying tests
 7. Creating PRs
 
-See [COMMAND.md](./commands/migrate-tests/COMMAND.md) for full documentation.
-
-## Skills
-
-### mco-migration-workflow
-
-Comprehensive step-by-step workflow for MCO test migration implementation.
-
-**Workflow Phases:**
-1. **User Input Collection** - Repository paths, migration target, confirmation
-2. **Analysis** - Source/destination code analysis, dependency mapping
-3. **Migration Execution** - Code transformation, file creation, template copying
-4. **Verification** - Build, test listing, optional test run
-
-See [SKILL.md](./skills/mco-migration-workflow/SKILL.md) for detailed implementation guide.
+See [migrate-tests.md](./commands/migrate-tests.md) for full documentation.
 
 ## Installation
 
@@ -112,10 +98,9 @@ The migration handles:
 
 To add new tools or improve existing ones:
 
-1. Add skills to `skills/<skill-name>/SKILL.md`
-2. Add commands to `commands/<command-name>/COMMAND.md`
-3. Update plugin version in `.claude-plugin/plugin.json`
-4. Update this README
+1. Add commands to `commands/<command-name>.md`
+2. Update plugin version in `.claude-plugin/plugin.json`
+3. Update this README
 
 ## License
 

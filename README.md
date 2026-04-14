@@ -15,9 +15,6 @@ Automates migration of OpenShift MCO tests from `openshift-tests-private` to `ma
 **Commands:**
 - `/migrate-tests` - Migrate tests between repositories with full transformation
 
-**Skills:**
-- `mco-migration-workflow` - Step-by-step migration implementation guide
-
 ## Installation
 
 ### Option 1: Add to Claude Settings (Recommended)
@@ -35,7 +32,7 @@ Add this repository as a marketplace in your `~/.claude/settings.json`:
     }
   },
   "enabledPlugins": {
-    "skill-creator@project-claude-kit": true
+    "mco-tools@project-claude-kit": true
   }
 }
 ```
@@ -59,7 +56,7 @@ Then add to `settings.json`:
 ```json
 {
   "enabledPlugins": {
-    "skill-creator@project-claude-kit": true
+    "mco-tools@project-claude-kit": true
   }
 }
 ```
@@ -83,19 +80,20 @@ This will guide you through migrating MCO tests with:
 
 ```
 project-claude-kit/
+├── .claude/
+│   └── commands/
+│       └── migrate-tests.md     # User-facing command
 ├── .claude-plugin/
-│   └── marketplace.json     # Marketplace configuration
+│   └── marketplace.json         # Marketplace configuration
 ├── plugins/
-│   └── skill-creator/       # Skill creation helpers
+│   └── mco-tools/               # MCO test migration tools
 │       ├── .claude-plugin/
 │       │   └── plugin.json
-│       ├── skills/
-│       │   └── create-skill/
-│       │       └── SKILL.md
+│       ├── commands/
+│       │   └── migrate-tests.md # Command with full workflow
 │       └── README.md
-├── .git/
 ├── .gitignore
-└── README.md                # This file
+└── README.md                    # This file
 ```
 
 ## Adding New Plugins
@@ -105,8 +103,7 @@ To add a new plugin to this marketplace:
 1. Create plugin directory structure:
    ```bash
    mkdir -p plugins/<plugin-name>/.claude-plugin
-   mkdir -p plugins/<plugin-name>/skills/<skill-name>
-   mkdir -p plugins/<plugin-name>/commands/<command-name>
+   mkdir -p plugins/<plugin-name>/commands
    ```
 
 2. Create `plugins/<plugin-name>/.claude-plugin/plugin.json`:
@@ -121,11 +118,11 @@ To add a new plugin to this marketplace:
    }
    ```
 
-3. Add skills (SKILL.md) or commands (COMMAND.md) with proper frontmatter:
+3. Add commands with proper frontmatter:
    ```markdown
    ---
-   name: Skill/Command Name
    description: One-line description
+   argument-hint: ""
    ---
    ```
 
@@ -160,7 +157,7 @@ Contributions are welcome! Please:
 
 1. Fork the repository
 2. Create a feature branch
-3. Add your plugin or skill
+3. Add your plugin
 4. Submit a pull request
 
 ## Resources
