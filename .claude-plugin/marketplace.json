@@ -8,7 +8,7 @@
       "name": "mco-tools",
       "source": "./plugins/mco-tools",
       "description": "Tools for migrating OpenShift MCO tests from openshift-tests-private to machine-config-operator",
-      "version": "1.0.0"
+      "version": "0.0.1"
     }
   ]
 }

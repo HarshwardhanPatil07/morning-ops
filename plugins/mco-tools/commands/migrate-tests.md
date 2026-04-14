@@ -5,17 +5,17 @@ argument-hint: ""
 
 ## Name
 
-migrate-tests
+mco-tools:migrate-tests
 
 ## Synopsis
 
 ```bash
-/migrate-tests
+/mco-tools:migrate-tests
 ```
 
 ## Description
 
-The `/migrate-tests` command automates the migration of MCO (Machine Config Operator) test cases from the `openshift-tests-private` repository to the `machine-config-operator` repository. It handles all transformations required to port tests between these repositories, including package renaming, import rewriting, test name reformatting, template file copying, and utility function migration.
+The `mco-tools:migrate-tests` command automates the migration of MCO (Machine Config Operator) test cases from the `openshift-tests-private` repository to the `machine-config-operator` repository. It handles all transformations required to port tests between these repositories, including package renaming, import rewriting, test name reformatting, template file copying, and utility function migration.
 
 **What it does:**
 
@@ -1050,7 +1050,7 @@ Ensure:
 ### Migrate a whole test file
 
 ```bash
-/migrate
+/mco-tools:migrate-tests
 ```
 
 The command will:
@@ -1070,7 +1070,7 @@ The command will:
 ### Example interaction — whole file
 
 ```text
-User: /migrate-tests
+User: /mco-tools:migrate-tests
 
 AI: What is the path to your openshift-tests-private repository?
 User: /home/user/repos/openshift-tests-private
