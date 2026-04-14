@@ -80,9 +80,6 @@ This will guide you through migrating MCO tests with:
 
 ```
 project-claude-kit/
-├── .claude/
-│   └── commands/
-│       └── migrate-tests.md     # User-facing command
 ├── .claude-plugin/
 │   └── marketplace.json         # Marketplace configuration
 ├── plugins/
