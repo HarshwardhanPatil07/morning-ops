@@ -500,13 +500,16 @@ goimports -w "$TEST_DIR/<target-file>"
 gofmt -s -w "$TEST_DIR/<target-file>"
 ```
 
-#### Step 2: Build Verification
+#### Step 2: Build the Test Binary
+
+Build the test binary using `make build`:
 
 ```bash
 cd "$TARGET_REPO"
-# Try to build the test package
-go build ./test/extended/mco/...
+make build
 ```
+
+This produces the `./bin/extended-platform-tests` binary.
 
 **On build failure:**
 1. Read the error carefully
@@ -517,41 +520,94 @@ go build ./test/extended/mco/...
 3. Fix and retry (up to 3 iterations)
 4. If still failing after 3 attempts, show the error and ask the user for guidance
 
-#### Step 3: Present Generated Code for Review
+#### Step 3: Verify Test Listing (Dry Run)
+
+After a successful build, verify the generated test appears in the binary by running a dry-run filtered by the Polarion ID:
+
+```bash
+cd "$TARGET_REPO"
+./bin/extended-platform-tests run all --dry-run 2>&1 | grep "<polarion-id>" | head -5
+```
+
+**Expected output:** The test should appear with its full name, e.g.:
+```text
+"[sig-mco] MCO <SuiteName> Author:<username>-...-<polarion-id>-[P1] <description> [Serial]"
+```
+
+If the test does NOT appear:
+1. Check `package mco` is correct
+2. Check `var _ = g.Describe(...)` is used (init-time registration)
+3. Check the file is in `test/extended/mco/`
+4. Rebuild and retry
+
+#### Step 4: Present Generated Code for Review
 
 Show the user:
 1. The complete generated test code (or diff if adding to existing file)
 2. Any new template files created
 3. Build status (pass/fail)
-4. A list of conventions applied
-5. Any review patterns that influenced the code
+4. Dry-run listing output confirming the test is registered
+5. A list of conventions applied
+6. Any review patterns that influenced the code
 
 Ask: "Please review the generated test. Would you like to:
 1. **Accept** as-is
 2. **Modify** - tell me what to change
 3. **Regenerate** - start over with different approach"
 
-#### Step 4: Iterate on Feedback
+#### Step 5: Iterate on Feedback
 
 If the user requests modifications:
 1. Apply the requested changes
-2. Re-format and re-build
-3. Present the updated code
-4. Repeat until accepted
+2. Re-format and re-build (`make build`)
+3. Re-verify with dry-run listing
+4. Present the updated code
+5. Repeat until accepted
 
 **IMPORTANT:** If the user provides feedback that represents a new coding convention or correction, save it to the `review_patterns_mco.md` memory file so future runs benefit from it.
 
-#### Step 5: Optional Commit and PR
+#### Step 6: Optional Test Execution Against a Cluster
+
+After the user accepts the code, ask: "Would you like to run this test against a cluster? This requires a KUBECONFIG. [y/N]"
+
+If yes:
+
+```bash
+cd "$TARGET_REPO"
+export KUBECONFIG=~/Downloads/kubeconfig
+
+# Run the specific test
+./bin/extended-platform-tests run-test "<full-test-name>"
+```
+
+Where `<full-test-name>` is the complete test name from the dry-run listing (e.g., the full string shown by `grep "<polarion-id>"`).
+
+**If the user has a custom KUBECONFIG path**, ask for it:
+"What is the path to your kubeconfig? (default: `~/Downloads/kubeconfig`)"
+
+Report the test result (pass/fail) and any output to the user.
+
+#### Step 7: Optional Commit and PR
 
 After user accepts the code, ask: "Would you like me to commit and create a PR? [Y/n]"
 
 If yes:
+
+**CRITICAL: Only stage test source files and testdata. NEVER stage `go.mod`, `go.sum`, or build artifacts (`bin/`, `_output/`).** The `make build` step may update `go.mod`/`go.sum` — these changes must NOT be committed. Restore them before committing:
+
 ```bash
 cd "$TARGET_REPO"
+
+# Restore go.mod and go.sum to their original state
+git checkout -- go.mod go.sum 2>/dev/null
+
 BRANCH="automate-test-<polarion-id>"
 git checkout -b "$BRANCH"
+
+# Only add test source files and testdata — nothing else
 git add "$TEST_DIR/<target-file>"
 git add "$TESTDATA_DIR/"*.yaml 2>/dev/null
+
 git commit -s -m "$(cat <<'EOF'
 Add automated test for OCP-<polarion-id>
 
