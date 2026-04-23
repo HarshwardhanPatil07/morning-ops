@@ -31,14 +31,12 @@ A styled HTML email for each meeting with:
 
 ## Prerequisites
 
-| Tool | Purpose | Install |
-|------|---------|---------|
-| [OpenCode](https://opencode.ai) | AI agent that orchestrates the workflow | See [opencode.ai](https://opencode.ai) |
-| [gws](https://github.com/nicholasgasior/gws) | Google Workspace CLI (Calendar, Drive, Gmail, Docs) | See gws docs |
-| systemd | Timer and service management | Pre-installed on most Linux distros |
-| notify-send | Desktop notifications (optional) | `sudo dnf install libnotify` / `sudo apt install libnotify-bin` |
+- OpenCode -- AI agent that orchestrates the workflow
+- gws -- Google Workspace CLI (Calendar, Drive, Gmail, Docs)
 
 ## Setup
+
+> **Don't want to set up manually?** Just tell your AI agent to do it -- paste this README and it will handle the setup for you.
 
 ### 1. Authenticate gws
 
@@ -162,16 +160,6 @@ Test manually:
 ./daily-meeting-reminder.sh tomorrow     # tomorrow's meetings
 ./daily-meeting-reminder.sh "2026-04-21" # specific date
 ```
-
-## Configuration
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `EMAIL_TO` | -- | Recipient email (hardcoded, never overridden by AI) |
-| `OPENCODE_BIN` | `~/.opencode/bin/opencode` | Path to OpenCode binary |
-| `OPENCODE_MODEL` | -- | AI model identifier |
-| `OPENCODE_TIMEOUT` | `360` | Max seconds for the AI agent |
-| `BASE_DIR` | `~/.local/share/daily-meeting-reminder` | Root for logs, markers, output |
 
 ## Troubleshooting
 
