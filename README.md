@@ -2,7 +2,7 @@
 
 Your mornings, automated. AI-driven tooling for developer productivity.
 
-This repository contains AI-powered automations and plugins for streamlining daily engineering workflows -- from meeting prep to test migration.
+A growing collection of AI-powered automations and plugins for streamlining daily engineering workflows. New tools get added as I learn and automate more.
 
 ## What's Inside
 
