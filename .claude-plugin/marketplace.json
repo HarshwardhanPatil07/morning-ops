@@ -9,6 +9,12 @@
       "source": "./plugins/mco-tools",
       "description": "Tools for migrating and automating OpenShift MCO tests",
       "version": "0.0.2"
+    },
+    {
+      "name": "scrum-team",
+      "source": "./plugins/scrum-team",
+      "description": "Multi-agent scrum team for software development tasks",
+      "version": "0.1.0"
     }
   ]
 }

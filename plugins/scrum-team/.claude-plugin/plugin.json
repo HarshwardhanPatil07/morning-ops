@@ -1,0 +1,8 @@
+{
+  "name": "scrum-team",
+  "description": "Multi-agent scrum team — Harshya (Team Lead) coordinates Architect, Developer, QE, and Staff Engineer agents for software development tasks",
+  "version": "0.1.0",
+  "author": {
+    "name": "HarshwardhanPatil07"
+  }
+}
